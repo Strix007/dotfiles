@@ -1152,25 +1152,25 @@
 ;; Haskell-mode
 (use-package haskell-mode
   :mode
-  ("\\.hs\\")
+  ("\\.hs\\’")
   )
 
 ;; Lua-mode
 (use-package lua-mode
   :mode
-  ("\\.lua\\")
+  ("\\.lua\\’")
   )
 
 ;; Rust-mode
 (use-package rust-mode
   :mode
-  ("\\.rs\\")
+  ("\\.rs\\’")
   )
 
 ;; Json-mode
 (use-package json-mode
   :mode
-  ("\\.json\\")
+  ("\\.json\\’")
   )
 
 ;; Typescript-mode
@@ -1522,7 +1522,7 @@
   :custom
   (sxhkd-mode-reload-config t)
   :mode
-  ("\\sxhkdrc\\" . sxhkdrc-mode)
+  ("\\sxhkdrc\\’" . sxhkdrc-mode)
   )
 
 ;; Minimap
