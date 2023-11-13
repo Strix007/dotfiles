@@ -31,6 +31,12 @@
 ;; Disable dired alternate file warning
 (put 'dired-find-alternate-file 'disabled nil)
 
+;; Enable recursive minibuffers
+(setq enable-recursive-minibuffers t)
+
+;; Make sure package.el does not install any packages
+(setq package-enable-at-startup nil)
+
 ;; Set emacs window title
 (setq frame-title-format '(buffer-file-name "%f" "%b"))
 
