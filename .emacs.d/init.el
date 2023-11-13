@@ -540,10 +540,10 @@
    ("C-c k"   . counsel-rg)
    ("C-x C-i" . counsel-imenu)
    :map ivy-minibuffer-map
-   ("<tab>" . ivy-alt-done)
-   ("C-<tab>" . ivy-immediate-done)
-   ("M-k" . ivy-previous-line)
-   ("M-j" . ivy-next-line)
+   ("<tab>"   . ivy-alt-done)
+   ("M-<tab>" . ivy-immediate-done)
+   ("M-k"     . ivy-previous-line)
+   ("M-j"     . ivy-next-line)
    )
   )
 
@@ -627,10 +627,10 @@
   (company-idle-delay 0.0)
   :bind
   (
-   ("C-<tab>" . company-complete)
+   ("M-<tab>" . company-complete)
    :map company-active-map
-   ("<tab>" . yas-next-field-or-maybe-expand)
-   ("C-<tab>" . company-complete-common)
+   ("<tab>"           . yas-next-field-or-maybe-expand)
+   ("M-<tab>"         . company-complete-common)
    ("C-<iso-lefttab>" . yas-expand)
    )
   )
@@ -1068,7 +1068,7 @@
    ("C-c n f" . org-roam-node-find)
    ("C-c n i" . org-roam-node-insert)
    :map org-mode-map
-   ("C-<tab>"    . completion-at-point)
+   ("M-<tab>" . completion-at-point)
    )
   )
 
