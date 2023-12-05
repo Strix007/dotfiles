@@ -24,6 +24,10 @@
 (set-face-attribute 'default nil        :font "JetBrains Mono"  :height 125 :weight 'medium)
 (set-face-attribute 'fixed-pitch nil    :font "JetBrains Mono"  :height 150 :weight 'medium)
 (set-face-attribute 'variable-pitch nil :font "Source Sans Pro" :height 150 :weight 'medium)
+;; Make comments italic
+(set-face-attribute 'font-lock-comment-face nil :slant 'italic)
+;; Make keywords italic
+(set-face-attribute 'font-lock-keyword-face nil :slant 'italic)
 
 ;; Initialize package sources
 (require 'package)
@@ -289,7 +293,8 @@
 (use-package all-the-icons
   :config
   (when (and (not (member "all-the-icons" (font-family-list)))
-             (window-system))
+             (window-system)
+             )
     (all-the-icons-install-fonts t)
     )
   )
@@ -301,7 +306,7 @@
 ;; Projectile
 (use-package projectile
   :diminish
-  projectile-mode
+  (projectile-mode)
   :custom
   (
    (projectile-completion-system 'auto)
@@ -424,8 +429,13 @@
   (delete-by-moving-to-trash t
                              trash-directory "~/.local/share/Trash/files"
                              )
-  ;; Downloas "gls" and uncomment this line if youre on OSX
+  ;; Download "gls" and uncomment this line if you are on OSX
   ;; (insert-directory-program "gls")
+  )
+
+;; Wdired
+(use-package wdired
+  :straight nil
   )
 
 ;; All-the-icons-dired
@@ -442,7 +452,8 @@
   (dirvish)
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
-    "H" 'dired-hide-dotfiles-mode)
+    "H" 'dired-hide-dotfiles-mode
+    )
   )
 
 ;; Media-progress-dirvish
@@ -497,7 +508,7 @@
   (doom-modeline-buffer-encoding nil)
   (doom-modeline-indent-info nil)
   (doom-modeline-minor-modes t)
-  (doom-modeline-buffer-file-name-style 'truncate-except-project)
+  (doom-modeline-buffer-file-name-style 'truncate-upto-project)
   )
 
 ;; Helpful
@@ -513,6 +524,7 @@
   ("C-h c" . describe-symbol)
   ("C-h v" . describe-variable)
   ("C-h k" . helpful-key)
+  ("C-h z" . describe-face)
   )
 
 ;; Ivy
@@ -542,6 +554,7 @@
    :map ivy-minibuffer-map
    ("<tab>"   . ivy-alt-done)
    ("M-<tab>" . ivy-immediate-done)
+   ;; ("C-<tab>" . ivy-immediate-done)
    ("M-k"     . ivy-previous-line)
    ("M-j"     . ivy-next-line)
    )
@@ -595,7 +608,7 @@
 (use-package which-key
   :defer t
   :diminish
-  which-key-mode
+  (which-key-mode)
   :init
   (which-key-mode)
   :config
@@ -628,9 +641,11 @@
   :bind
   (
    ("M-<tab>" . company-complete)
+   ;; ("C-<tab>" . company-complete)
    :map company-active-map
    ("<tab>"           . yas-next-field-or-maybe-expand)
    ("M-<tab>"         . company-complete-common)
+   ;; ("C-<tab>" . company-complete-common)
    ("C-<iso-lefttab>" . yas-expand)
    )
   )
@@ -725,6 +740,17 @@
   "fd" '(dired-jump      :which-key "Open Dired")
   "ft" '(vertico-repeat  :which-key "Repeat Vertico Session")
   "fT" '(vertico-suspend :which-key "Resume Vertico Suspended Session")
+  ;; Zoxide
+  "fz"  '(:ignore t                   :which-key "Zoxide")
+  "fzf" '(zoxide-find-file            :which-key "Zoxide Find File")
+  "fzF" '(zoxide-find-file-with-query :which-key "Find File With Query")
+  "fzt" '(zoxide-travel               :which-key "Find Directory")
+  "fzT" '(zoxide-travel-with-query    :which-key "Find Directory With Query")
+  "fzc" '(zoxide-cd                   :which-key "Change Working Directory")
+  "fzC" '(zoxide-cd-with-query        :which-key "Change Working Directory With Query")
+  "fza" '(zoxide-add                  :which-key "Add Path Into Database")
+  "fzd" '(zoxide-remove               :which-key "Remove Path From Database")
+  "fzl" '(zoxide-query-with           :which-key "List All Paths In Database Matching Query")
   ;; Bookmarks
   "b"  '(:ignore t        :which-key "Bookmark")
   "bb" '(consult-bookmark :which-key "List Bookmarks")
@@ -775,22 +801,23 @@
 ;; Hydra
 (use-package hydra
   :defer t
-  )
-;; Define a hydra for text scale
-(defhydra hydra-text-scale (:color t)
-  "Scale Text"
-  ("=" text-scale-increase "Zoom In")
-  ("-" text-scale-decrease "Zoom Out")
-  ("ESC" nil "Finished" :exit t)
-  )
-;; Define a hydra for split resizing
-(defhydra hydra-splits (:color t)
-  "Manage Splits"
-  ("[" shrink-window-horizontally  10 "Shrink Window Horizontally")
-  ("]" enlarge-window-horizontally 10 "Enlarge Window Horizontally")
-  ("-" shrink-window 10 "Shrink Window Vertically")
-  ("=" balance-windows "Balance Windows")
-  ("ESC" nil "Finished" :exit t)
+  :config
+  ;; Define a hydra for text scale
+  (defhydra hydra-text-scale (:color t)
+    "Scale Text"
+    ("=" text-scale-increase "Zoom In")
+    ("-" text-scale-decrease "Zoom Out")
+    ("ESC" nil "Finished" :exit t)
+    )
+  ;; Define a hydra for split resizing
+  (defhydra hydra-splits (:color t)
+    "Manage Splits"
+    ("[" shrink-window-horizontally  10 "Shrink Window Horizontally")
+    ("]" enlarge-window-horizontally 10 "Enlarge Window Horizontally")
+    ("-" shrink-window 10 "Shrink Window Vertically")
+    ("=" balance-windows "Balance Windows")
+    ("ESC" nil "Finished" :exit t)
+    )
   )
 
 ;; Magit
@@ -1069,6 +1096,7 @@
    ("C-c n i" . org-roam-node-insert)
    :map org-mode-map
    ("M-<tab>" . completion-at-point)
+   ;; ("C-<tab>" . completion-at-point)
    )
   )
 
@@ -1152,25 +1180,25 @@
 ;; Haskell-mode
 (use-package haskell-mode
   :mode
-  ("\\.hs\\’")
+  ("\\.hs\\'")
   )
 
 ;; Lua-mode
 (use-package lua-mode
   :mode
-  ("\\.lua\\’")
+  ("\\.lua\\'" . lua-mode)
   )
 
 ;; Rust-mode
 (use-package rust-mode
   :mode
-  ("\\.rs\\’")
+  ("\\.rs\\'")
   )
 
 ;; Json-mode
 (use-package json-mode
   :mode
-  ("\\.json\\’")
+  ("\\.json\\'")
   )
 
 ;; Typescript-mode
@@ -1223,7 +1251,10 @@
   (prog-mode . arbab/lsp-mode-setup)
   (lsp-mode . (lambda ()
                 (let ((lsp-keymap-prefix "C-c l"))
-                  (lsp-enable-which-key-integration))))
+                  (lsp-enable-which-key-integration)
+                  )
+                )
+            )
   :custom
   (lsp-enable-which-key-integration t)
   (lsp-lens-enable nil)
@@ -1319,7 +1350,7 @@
 (use-package centaur-tabs
   :disabled t
   :init
-  (centaur-tabs-mode t)
+  (centaur-tabs-mode +1)
   :hook
   (
    (
@@ -1549,6 +1580,9 @@
   :custom
   (prescient-persist-mode t)
   (prescient-sort-length-enable nil)
+  :config
+  (set-face-foreground 'prescient-primary-highlight "#b48ead")
+  (set-face-foreground 'prescient-secondary-highlight "#a3be8c")
   )
 
 ;; Ivy-prescient
@@ -1567,12 +1601,6 @@
   (company)
   :config
   (company-prescient-mode +1)
-  )
-
-;; Amx
-(use-package amx
-  :after
-  (consult)
   )
 
 ;; Treesit-auto
@@ -1647,6 +1675,15 @@
   :defer t
   :custom
   (avy-all-windows t)
+  )
+
+;; Avy-zap
+(use-package avy-zap
+  :bind
+  (
+   ("M-z" . avy-zap-to-char-dwim)
+   ("M-Z" . avy-zap-up-to-char-dwim)
+   )
   )
 
 ;; Link-hint
@@ -1738,11 +1775,19 @@
     text-mode
     ) . git-gutter-mode)
   :custom
-  (git-gutter:update-interval 2)
-  (git-gutter:window-width 2)
-  (git-gutter:modified-sign "!")
-  (git-gutter:added-sign "")
-  (git-gutter:deleted-sign "") 
+  (git-gutter:update-interval 0.01)
+  ;; (git-gutter:window-width 2)
+  ;; (git-gutter:modified-sign "!")
+  ;; (git-gutter:added-sign "")
+  ;; (git-gutter:deleted-sign "")
+  )
+
+;; Git-gutter-fringe
+(use-package git-gutter-fringe
+  :config
+  (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom)
   )
 
 ;; Fancy-compilation
@@ -1898,7 +1943,7 @@
    )
   :hook
   (prog-mode . arbab/ts-fold-mode)
-  (ts-fold-mode . (lambda () (evil-define-key 'normal 'local (kbd "<tab>") 'ts-fold-toggle)))
+  (ts-fold-mode . (lambda () (evil-define-key 'normal 'local (kbd "<backtab>") 'ts-fold-toggle)))
   )
 
 ;; Indent-bars
@@ -1980,8 +2025,6 @@
     prog-mode
     ) . yas-minor-mode
    )
-  :custom
-  (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
   )
 
 ;; Yasnippet-snippets
@@ -2153,7 +2196,7 @@
 ;; Vertico-prescient
 (use-package vertico-prescient
   :after
-  (vertico)
+  (vertico prescient)
   :config
   (vertico-prescient-mode +1)
   )
@@ -2348,4 +2391,54 @@ targets."
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion))))
+  (orderless-matching-styles '(orderless-literal orderless-initialism orderless-regexp))
+  )
+
+;; Zoxide
+(use-package zoxide
+  :defer t
+  :config
+  (add-hook 'find-file-hook 'zoxide-add)
+  (add-hook 'projectile-after-switch-project-hook 'zoxide-add)
+  )
+
+;; Auto-yasnippet
+(use-package auto-yasnippet
+  :bind
+  (
+   ("C-c C-y w"   . aya-create)
+   ("C-c C-y TAB" . aya-expand)
+   ("C-c C-y SPC" . aya-expand-from-history)
+   ("C-c C-y d"   . aya-delete-from-history)
+   ("C-c C-y c"   . aya-clear-history)
+   ("C-c C-y n"   . aya-next-in-history)
+   ("C-c C-y p"   . aya-previous-in-history)
+   ("C-c C-y s"   . aya-persist-snippet)
+   ("C-c C-y o"   . aya-open-line)
+   )
+  )
+
+;; Devdocs
+(use-package devdocs
+  :bind
+  (
+   ("C-h D" . devdocs-lookup)
+   )
+  )
+
+(use-package selection-highlight-mode
+  :straight
+  (
+   :type git
+   :host github
+   :repo "balloneij/selection-highlight-mode"
+   )
+  :config
+  (selection-highlight-mode)
+  )
+
+;; Smartscan
+(use-package smartscan
+  :config
+  (smartscan-mode +1)
   )

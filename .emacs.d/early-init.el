@@ -40,6 +40,9 @@
 ;; Set emacs window title
 (setq frame-title-format '(buffer-file-name "%f" "%b"))
 
+;; Add new lines when at end of buffer
+(setq next-line-add-newlines t)
+
 ;; Native-comp
 ;; Silence compiler warnings
 (setq native-comp-async-report-warnings-errors nil)
@@ -203,6 +206,7 @@
                 browse-kill-ring-mode-hook
                 Custom-mode-hook
                 deadgrep-mode-hook
+                devdocs-mode
                 )
               )
   (add-hook mode (lambda () (display-line-numbers-mode 0)
@@ -259,6 +263,7 @@
         (tsx-mode . tsx-ts-mode)
         (typescript-mode . typescript-ts-mode)
         (yaml-mode . yaml-ts-mode)
+        (lua-ts-mode . lua-mode)
         )
       )
 
