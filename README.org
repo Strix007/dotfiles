@@ -9,46 +9,75 @@
 * Personal Configuration Of Arbab Khan :noexport:
 This is my personal configuration. This is not meant as a plug and play configuration.
 
-* Table of Contents :toc:
+* Table of Contents
+:PROPERTIES:
+:TOC:      :include all :ignore this
+:END:
+:CONTENTS:
 - [[#caution][Caution]]
 - [[#prerequisite-knowledge][Prerequisite Knowledge]]
 - [[#about][About]]
   - [[#wayland][Wayland]]
+    - [[#caution-0][Caution]]
+    - [[#what-to-install-wayland][What To Install (Wayland)]]
+      - [[#hyprland][Hyprland]]
+    - [[#others][Others]]
 - [[#showcase][Showcase]]
   - [[#xmonad][Xmonad]]
-  - [[#hyprland][Hyprland]]
+  - [[#hyprland-0][Hyprland]]
 - [[#keybindings][Keybindings]]
-  - [[#xmonad-1][Xmonad]]
+  - [[#xmonad-0][Xmonad]]
+    - [[#exit][Exit]]
+    - [[#layout][Layout]]
+    - [[#motion][Motion]]
+    - [[#shift][Shift]]
+    - [[#resize][Resize]]
   - [[#emacs][Emacs]]
   - [[#rofi][Rofi]]
   - [[#applications][Applications]]
   - [[#scratchpads][Scratchpads]]
   - [[#function-keys][Function Keys]]
 - [[#what-to-install][What To Install]]
-  - [[#xmonad-2][Xmonad]]
+  - [[#xmonad-1][Xmonad]]
+    - [[#xmonad-log][Xmonad-log]]
   - [[#polybar][Polybar]]
   - [[#shell][Shell]]
   - [[#tmux][Tmux]]
   - [[#neovim][NeoVim]]
   - [[#lf][lf]]
   - [[#fzf][fzf]]
-  - [[#rofi-1][Rofi]]
+  - [[#rofi-0][Rofi]]
   - [[#mpd][MPD]]
-  - [[#emacs-1][Emacs]]
-  - [[#others][Others]]
+  - [[#emacs-0][Emacs]]
+  - [[#others-0][Others]]
   - [[#optionally][Optionally]]
 - [[#fonts][Fonts]]
 - [[#additional-notes][Additional Notes]]
-  - [[#xmonad-3][Xmonad]]
-  - [[#emacs-2][Emacs]]
+  - [[#xmonad-2][Xmonad]]
+    - [[#xmonad-with-polybar][Xmonad With Polybar]]
+    - [[#xmonad-startup][Xmonad Startup]]
+    - [[#xmonad-ctl][Xmonad-ctl]]
+  - [[#emacs-1][Emacs]]
+    - [[#lsp][LSP]]
+    - [[#counsel-spotify][Counsel-spotify]]
+    - [[#yasnippets][Yasnippets]]
   - [[#xmodmap][Xmodmap]]
-  - [[#polybar-1][Polybar]]
+  - [[#polybar-0][Polybar]]
+    - [[#display][DIsplay]]
+    - [[#weather-module][Weather Module]]
 - [[#contributing][Contributing]]
+  :END:
 
 * Caution
+:PROPERTIES:
+:CUSTOM_ID: caution
+:END:
 This repo is tailored towards a 1920x1080 system so things may not look correct on other resolutions. This is something yourself to get working on your system. I might make things a bit more friendly on other resolutions in the future.
 
 * Prerequisite Knowledge
+:PROPERTIES:
+:CUSTOM_ID: prerequisite-knowledge
+:END:
 You need to be a little familiar with the following to get the most out of this repo.
 - [[https://www.youtube.com/watch?v=3noK4GTmyMw][Xmonad]]
 - [[https://www.youtube.com/watch?v=TutfIwxSE_s&t=792s][Rofi]]
@@ -58,23 +87,47 @@ You need to be a little familiar with the following to get the most out of this 
 I have also linked good beginner resources if you need help with any of these.
 
 * About
+:PROPERTIES:
+:CUSTOM_ID: about
+:END:
 As I said above, this is meant to be my personal configuration that I can clone on my system and get working instantly so many things are tailored to my personal liking. There may be some things you might want to change to get working to your liking.
 
 This config also took a lot of inspiration from [[https://github.com/adi1090x/rofi][adi1090x]]'s rofi and [[https://github.com/Axarva/dotfiles-2.0][Axarva]]'s xmonad configs so check them out.
 
 ** Wayland
+:PROPERTIES:
+:CUSTOM_ID: wayland
+:END:
   I needed to use some android apps on my system and couldn’t get anbox working so decided this would be a perfect time to configure a wayland wm for waydroid. I chose hyprland and waybar for this. It’s a bit rough around the edges and needs some more time but most things work. To get the wayland system up and running you need the following. Most but not all xmonad bindings work for hyprland.
 *** Caution
+:PROPERTIES:
+:CUSTOM_ID: caution-0
+:END:
 The wayland setup has only been tested on arch linux. I don’t know if it will run just as smoothly on other distros. If you run into any issues, feel free to open an issue.
 *** What To Install (Wayland)
+:PROPERTIES:
+:CUSTOM_ID: what-to-install-wayland
+:END:
 **** Hyprland
+:PROPERTIES:
+:CUSTOM_ID: hyprland
+:END:
 -  [[https://github.com/Duckonaut/hyprload][hyprload]]
 -  [[https://wiki.hyprland.org/Getting-Started/Installation/][hyprland-git]] 
 -  [[https://github.com/Alexays/Waybar][waybar-hyprland-git]]
 *** Others
+:PROPERTIES:
+:CUSTOM_ID: others
+:END:
 -  [[https://sw.kovidgoyal.net/kitty/][kitty]]
 * Showcase
+:PROPERTIES:
+:CUSTOM_ID: showcase
+:END:
 ** Xmonad
+:PROPERTIES:
+:CUSTOM_ID: xmonad
+:END:
 [[file:assets/images/home.png]]
 [[file:assets/images/terminal.png]]
 [[file:assets/images/terminal2.png]]
@@ -87,11 +140,23 @@ The wayland setup has only been tested on arch linux. I don’t know if it will 
 [[file:assets/images/browser.png]]
 [[file:assets/images/rofi-mpd.png]]
 ** Hyprland
+:PROPERTIES:
+:CUSTOM_ID: hyprland-0
+:END:
 [[file:assets/images/wayland.png]]
 
 * Keybindings
+:PROPERTIES:
+:CUSTOM_ID: keybindings
+:END:
 ** Xmonad
+:PROPERTIES:
+:CUSTOM_ID: xmonad-0
+:END:
 *** Exit
+:PROPERTIES:
+:CUSTOM_ID: exit
+:END:
 | Keybind           | Function            |
 |-------------------+---------------------|
 | super + shift + c | Recompile xmonad    |
@@ -99,6 +164,9 @@ The wayland setup has only been tested on arch linux. I don’t know if it will 
 | super + shift + q | Open rofi powermenu |
 | alt   + F4        | Exit xmonad         |
 *** Layout
+:PROPERTIES:
+:CUSTOM_ID: layout
+:END:
 | Keybind             | Function                                  |
 |---------------------+-------------------------------------------|
 | super + n           | Refresh layouts                           |
@@ -110,6 +178,9 @@ The wayland setup has only been tested on arch linux. I don’t know if it will 
 | super + f shift + f | Toggle bar (polybar)                      |
 | super + f f         | Fullscreen focused window                 |
 *** Motion
+:PROPERTIES:
+:CUSTOM_ID: motion
+:END:
 | Keybind                         | Function                        |
 |---------------------------------+---------------------------------|
 | super + 1...9                   | Move from workspaces 1 to 9     |
@@ -129,6 +200,9 @@ The wayland setup has only been tested on arch linux. I don’t know if it will 
 | super + alt + left              | Move window left by 10 pixels   |
 | super + alt + right             | Move window right by 10 pixels  |
 *** Shift
+:PROPERTIES:
+:CUSTOM_ID: shift
+:END:
 | Keybind                        | Function                   |
 |--------------------------------+----------------------------|
 | super + shift + 1...9          | Shift to workspaces 1 to 9 |
@@ -137,6 +211,9 @@ The wayland setup has only been tested on arch linux. I don’t know if it will 
 | super + shift + k              | Shift to upper window      |
 | super + shift + j              | Shift to down window       |
 *** Resize
+:PROPERTIES:
+:CUSTOM_ID: resize
+:END:
 | Keybind                    | Function                             |
 |----------------------------+--------------------------------------|
 | super + kp_add             | Increase window size by 10 pixels    |
@@ -146,12 +223,18 @@ The wayland setup has only been tested on arch linux. I don’t know if it will 
 | super + alt + kp_add       | Increase screen spacing by 10 pixels |
 | super + alt + kp_subtract  | Decrease screen spacing by 10 pixels |
 ** Emacs
+:PROPERTIES:
+:CUSTOM_ID: emacs
+:END:
 | Keybind                 | Function   |
 |-------------------------+------------|
 | super + e e             | Open emacs |
 | super + e super + enter | Open vterm |
 | super + e z             | Open dired |
 ** Rofi
+:PROPERTIES:
+:CUSTOM_ID: rofi
+:END:
 | Keybind             | Function                           |
 |---------------------+------------------------------------|
 | super + d d         | Open rofi drun                     |
@@ -162,6 +245,9 @@ The wayland setup has only been tested on arch linux. I don’t know if it will 
 | super + d s         | Open spotify widget (rofi)         |
 | super + d b         | Open browser menu(rofi)            |
 ** Applications
+:PROPERTIES:
+:CUSTOM_ID: applications
+:END:
 | Keybind             | Function                    |
 |---------------------+-----------------------------|
 | super + enter enter | Launch terminal (alacritty) |
@@ -170,12 +256,18 @@ The wayland setup has only been tested on arch linux. I don’t know if it will 
 | super + a b         | Open browser (firefox)      |
 | super + p r         | Restart bar (polybar)       |
 ** Scratchpads 
+:PROPERTIES:
+:CUSTOM_ID: scratchpads
+:END:
 | Keybind                 | Function                               |
 |-------------------------+----------------------------------------|
 | super + s super + enter | Launch terminal scratchpad (alacritty) |
 | super + s x             | Launch MPD player (ncmpcpp)            |
 | super + s z             | Launch filemanager (lf)                |
 ** Function Keys
+:PROPERTIES:
+:CUSTOM_ID: function-keys
+:END:
 | Keybind              | Function                      |
 |----------------------+-------------------------------|
 | XF86Explorer         | Launch filemanager (thunar)   |
@@ -191,13 +283,25 @@ The wayland setup has only been tested on arch linux. I don’t know if it will 
 | XF86AudioLowerVolume | Volume decrease (pactl)       |
 
 * What To Install
+:PROPERTIES:
+:CUSTOM_ID: what-to-install
+:END:
 These programs are required to get you started with this config so make sure to install them. Only build them from source if you have checked your distribution’s package manager and cannot find them. If you’re on arch linux, make sure to also check the [[https://aur.archlinux.org][AUR]]. 
 ** Xmonad
+:PROPERTIES:
+:CUSTOM_ID: xmonad-1
+:END:
 - [[https://xmonad.org/download.html][Xmonad]] 
 - [[https://github.com/xmonad/xmonadcontrib][Xmonad-contrib]] 
 *** Xmonad-log
+:PROPERTIES:
+:CUSTOM_ID: xmonad-log
+:END:
 - [[https://hackage.haskell.org/package/dbus][haskell-dbus]]
 ** Polybar
+:PROPERTIES:
+:CUSTOM_ID: polybar
+:END:
 - [[https://github.com/polybar/polybarinstallation][Polybar]] 
 - [[https://github.com/dancor/wmctrl][wmctrl]] 
 - [[https://github.com/altdesktop/playerctl][Playerctl]] 
@@ -205,6 +309,9 @@ These programs are required to get you started with this config so make sure to 
 - [[https://stedolan.github.io/jq][jq]]
 - [[https://github.com/Xfennec/progress][progress]]  
 ** Shell
+:PROPERTIES:
+:CUSTOM_ID: shell
+:END:
 - [[https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH][Zsh]]
 - [[https://getantidote.github.io/install][Antidote]] 
 - [[https://github.com/junegunn/fzf#installation][fzf]]
@@ -212,6 +319,9 @@ These programs are required to get you started with this config so make sure to 
 - [[https://github.com/lsd-rs/lsd#Installation][lsd]]
 - [[https://github.com/mozilla/sccache][sccache]]
 ** Tmux
+:PROPERTIES:
+:CUSTOM_ID: tmux
+:END:
 - [[https://github.com/tmux/tmux][tmux]]
 - [[https://github.com/tmux-plugins/tpm][tpm]]
 - [[https://github.com/mikefarah/yq][yq]] 
@@ -220,9 +330,15 @@ These programs are required to get you started with this config so make sure to 
 - [[https://github.com/facebook/pathpicker/][fpp]]
 - [[https://github.com/golang/go][go]]
 ** NeoVim
+:PROPERTIES:
+:CUSTOM_ID: neovim
+:END:
 - [[https://github.com/neovim/neovim/wiki/Installing-Neovim][neovim]]
 - [[https://www.gnu.org/software/make/#download][make]]
 ** lf 
+:PROPERTIES:
+:CUSTOM_ID: lf
+:END:
 - [[https://github.com/gokcehan/lf][lf]]  
 - [[https://github.com/junegunn/fzf#installation][fzf]]
 - [[https://github.com/jstkdng/ueberzugpp][ueberzug++]]
@@ -235,6 +351,9 @@ These programs are required to get you started with this config so make sure to 
 - [[https://wkhtmltopdf.org/downloads.html][wkhtmltopdf]]
 - [[https://github.com/hpjansson/chafa#Installing][chafa]]
 ** fzf
+:PROPERTIES:
+:CUSTOM_ID: fzf
+:END:
 - [[https://github.com/hpjansson/chafa#Installing][chafa]]
 - [[https://github.com/jstkdng/ueberzugpp][ueberzug++]]
 - [[https://stedolan.github.io/jq][jq]]
@@ -244,18 +363,30 @@ These programs are required to get you started with this config so make sure to 
 - [[https://github.com/transmission/transmission][transmission-cli]]
 - [[https://github.com/sharkdp/bat#installation][bat]]
 ** Rofi
+:PROPERTIES:
+:CUSTOM_ID: rofi-0
+:END:
 - [[https://github.com/davatorium/rofiinstallation][Rofi]] 
 - [[https://github.com/ropery/FFcast][ffcast]] 
 - [[https://github.com/naelstrof/slop][slop]] 
 - [[https://github.com/resurrectingopensourceprojects/scrot][scrot]]
 ** MPD
+:PROPERTIES:
+:CUSTOM_ID: mpd
+:END:
 - [[https://mpd.readthedocs.io/en/stable/user.html][mpd]] 
 - [[https://github.com/MusicPlayerDaemon/mpc][mpc]]   
 - [[https://rybczak.net/ncmpcpp/installation][ncmpcpp]]
 ** Emacs
+:PROPERTIES:
+:CUSTOM_ID: emacs-0
+:END:
 - [[https://www.gnu.org/software/emacs/download.html][emacs-nativecomp]] 
 - [[https://github.com/jgm/pandoc/blob/main/INSTALL.md][pandoc]] 
 ** Others
+:PROPERTIES:
+:CUSTOM_ID: others-0
+:END:
 - [[https://github.com/Raymo111/i3lockcolor][i3lock]] 
 - [[https://github.com/alacritty/alacritty/blob/master/INSTALL.md][Alacritty]] 
 - [[https://sw.kovidgoyal.net/kitty/binary/#][kitty]]
@@ -266,6 +397,9 @@ These programs are required to get you started with this config so make sure to 
 - [[https://github.com/Airblader/unclutter-xfixes][unclutter]]
 
 ** Optionally
+:PROPERTIES:
+:CUSTOM_ID: optionally
+:END:
 - [[https://i3wm.org/downloads/][i3]]
 *Note:* Used to use i3 before xmonad, that’s why it’s here. Most things work with i3 but I mainly use it as a fallback wm.
 
@@ -273,6 +407,9 @@ These programs are required to get you started with this config so make sure to 
 *Note:* Thought of moving all my non-wm related keybindings to sxhkd but found it to be buggy and decided not to do so. You can still use it if you wish as all my bindings are configured.
 
 * Fonts
+:PROPERTIES:
+:CUSTOM_ID: fonts
+:END:
 There are the fonts that are used in my configuratuin for text and icons. Make sure to install them.
 - [[https://github.com/tonsky/FiraCode][FiraCode]]
 - [[https://github.com/ryanoasis/nerd-fonts][Nerd Fonts]]
@@ -284,22 +421,46 @@ There are the fonts that are used in my configuratuin for text and icons. Make s
 - [[https://notofonts.github.io][Noto Sans]]
 
 * Additional Notes
+:PROPERTIES:
+:CUSTOM_ID: additional-notes
+:END:
 These are additional notes and instruction you have to follow to get this config up and running.
 ** Xmonad
+:PROPERTIES:
+:CUSTOM_ID: xmonad-2
+:END:
 *** Xmonad With Polybar
+:PROPERTIES:
+:CUSTOM_ID: xmonad-with-polybar
+:END:
 Xmonad with polybar was a bit tricky to get running, I had to use [[https://github.com/xintron/xmonad-log][xmonad-log]] to get things working. I have already put a compiled binary of xmonad-log in =.config/polybar/scripts= so no worries there but you do need to install =haskell-dbus= manually through your system's package manager.
 
 *** Xmonad Startup
+:PROPERTIES:
+:CUSTOM_ID: xmonad-startup
+:END:
 Xmonad starts up a lot of things configured for my system, such as =rclone= etc. Make sure to disable the ones you don't need.
 
 *** Xmonad-ctl
+:PROPERTIES:
+:CUSTOM_ID: xmonad-ctl
+:END:
 Xmonad-ctl is required for exit to login manager with rofi-powermenu. Make sure to use =-dynamic= flag when compiling =.xmonad/xmonadctl.hs=
 
 ** Emacs
+:PROPERTIES:
+:CUSTOM_ID: emacs-1
+:END:
 *** LSP
+:PROPERTIES:
+:CUSTOM_ID: lsp
+:END:
 Make sure to install the language-servers you need on your system.
 
 *** Counsel-spotify
+:PROPERTIES:
+:CUSTOM_ID: counsel-spotify
+:END:
 Define variables for spotify-client-id and spotify-client-secret for counsel-spotify in =.emacs.d/env.el=.
 
 #+begin_example
@@ -310,6 +471,9 @@ Define variables for spotify-client-id and spotify-client-secret for counsel-spo
 If you don't know how to get your spotify client id and secret, refer to [[https://cran.r-project.org/web/packages/spotidy/vignettes/Connecting-with-the-Spotify-API.html][this article]].
 
 *** Yasnippets
+:PROPERTIES:
+:CUSTOM_ID: yasnippets
+:END:
 Make sure to set up the following symlink
 
 =ln -s ~/.emacs.d/yasnippet ~/emacs.d/etc=
@@ -317,13 +481,28 @@ Make sure to set up the following symlink
 This is beacuase the =no-littering= package change the =yas-snippet-dirs= variable to =~/.emacs.d/etc/= instead to =~/.emacs.d=, causing the snippets to not be in included the git repository because =~/.emacs.d/etc= is in my =.gitignore=. The symlink fixes the issue.
 
 ** Xmodmap
+:PROPERTIES:
+:CUSTOM_ID: xmodmap
+:END:
 I have changed my caps key to ctrl and my right ctrl to caps key. If you don't want this behavior, delete =.Xmodmap=.
 
 ** Polybar
+:PROPERTIES:
+:CUSTOM_ID: polybar-0
+:END:
 *** DIsplay
+:PROPERTIES:
+:CUSTOM_ID: display
+:END:
 You need to set the MONITOR env to your output in .zshrc for polybar to display on the correct output.
 *** Weather Module
+:PROPERTIES:
+:CUSTOM_ID: weather-module
+:END:
 You need to make a =.env= in your home directory with an [[https://openweathermap.org/][OpenWeather]] API key and the code of the city you want to get the weather of. For more details on how to do this, check out my repo [[https://github.com/strix007/polybar-getweather][here]].
 
 * Contributing
+:PROPERTIES:
+:CUSTOM_ID: contributing
+:END:
 If you see me doing anything inefficiently in this config or you think something would be useful to me or you want to correct some error on my part, feel free to open a pull request.

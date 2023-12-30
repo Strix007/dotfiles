@@ -163,7 +163,7 @@
             ,(all-the-icons-material "restore" :height 1.0 :v-adjust 0.0)
             "Restore"
             "Restore Your Last Session"
-            (lambda (&rest _)(burly-open-last-bookmark))
+            (lambda (&rest _)(wg-open-workgoup "Last Session"))
             error
             )
            )
@@ -621,14 +621,6 @@
   (which-key-max-display-columns nil)
   )
 
-;; Counsel-spotify
-(use-package counsel-spotify
-  :defer t
-  :custom
-  (counsel-spotify-client-id spotify_class_id)
-  (counsel-spotify-client-secret spotify_class_secret)
-  )
-
 ;; Company
 (use-package company
   :hook
@@ -702,13 +694,6 @@
   )
 ;; Define keys using space as leader
 (arbab/leader-keys
-  ;; Spotify keybinds using counsel-spotify
-  "s"  '(:ignore t                         :which-key "Spotify")
-  "ss" '(counsel-spotify-toggle-play-pause :which-key "Play-Pause")
-  "sa" '(counsel-spotify-search-artist     :which-key "Search Artist")
-  "sd" '(counsel-spotify-search-album      :which-key "Search Album")
-  "sv" '(counsel-spotify-search-playlist   :which-key "Search Playlist")
-  "st" '(counsel-spotify-search-track      :which-key "Search Track")
   ;; Increase or decrease text scale using hydra
   "t"  '(:ignore t :which-key "Text")
   "ts" '(hydra-text-scale/body :which-key "Scale")
@@ -772,6 +757,12 @@
   "gr}" '(corral-braces-forward         :which-key "corral insert brackes forward")
   "gr;" '(corral-double-quotes-backward :which-key "corral insert double quotes backward")
   "gr:" '(corral-single-quotes-backward :which-key "corral insert double quotes backward")
+  ;; Popper
+  ;; "pp" '(popper-toggle            :which-key "Popper Toggle")
+  ;; "pj" '(popper-cycle             :which-key "Popper Cycle Forward")
+  ;; "pk" '(popper-cycle-backwards   :which-key "Popper Cycle Backward")
+  ;; "pt" '(popper-toggle-type       :which-key "Popper Toggle Type")
+  ;; "px" '(popper-kill-latest-popup :which-key "Popper Kill Latest Popup")
   ;; Harpoon
   "h"   '(:ignore t           :which-key "Harpoon")
   "hc"  '(harpoon-clear       :which-key "Clear harpoon marks")
@@ -952,6 +943,14 @@
 ;; Org-contrib
 (use-package org-contrib)
 
+;; Org-sticky-header
+(use-package org-sticky-header
+  :after
+  (org)
+  :hook
+  (org-mode-hook . org-sticky-header-mode)
+  )
+
 ;; Org-super-agenda
 (use-package org-super-agenda
   :init
@@ -1102,10 +1101,19 @@
 
 ;; Toc-org
 (use-package toc-org
+  :disabled t
   :after
   (org)
   :hook
   (org-mode . toc-org-mode)
+  )
+
+;; Org-make-toc
+(use-package org-make-toc
+  :hook
+  (org-mode . org-make-toc-mode)
+  :custom
+  (org-make-toc-insert-custom-ids t)
   )
 
 ;; Org-babel-templates
@@ -1177,6 +1185,18 @@
   (org-mode . org-imgtog-mode)
   )
 
+;; Org-bars
+(use-package org-bars
+  :straight
+  (
+   :type git
+   :host github
+   :repo "tonyaldon/org-bars"
+   )
+  :hook
+  (org-mode . org-bars-mode)
+  )
+
 ;; Haskell-mode
 (use-package haskell-mode
   :mode
@@ -1239,6 +1259,7 @@
     (unless (derived-mode-p
              'emacs-lisp-mode
              'yuck-mode
+             'snippet-mode
              )
       (lsp-deferred)
       (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
@@ -1424,11 +1445,11 @@
   (vundo-compact-display t)
   (vundo-glyph-alist vundo-unicode-symbols)
   :config
-  ;; Better contrasting highlight.
   (custom-set-faces
-   '(vundo-node ((t (:foreground "#808080"))))
-   '(vundo-stem ((t (:foreground "#808080"))))
-   '(vundo-highlight ((t (:foreground "#FFFF00"))))
+   '(vundo-node ((t (:foreground "#5e81ac"))))
+   '(vundo-stem ((t (:foreground "#5e81ac"))))
+   '(vundo-saved ((t (:foreground "#a3be8c"))))
+   '(vundo-highlight ((t (:foreground "#b48ead"))))
    )
   ;; Use `HJKL` VIM-like motion, also Home/End to jump around.
   :bind
@@ -1495,11 +1516,14 @@
   :preface
   (defun arbab/nov-mode-setup ()
     (face-remap-add-relative 'variable-pitch :family "Cantarell" :height 1.0)
-    (visual-fill-column-mode)
-    (visual-line-mode)
+    (visual-fill-column-mode +1)
+    (visual-line-mode +1)
+    ;; (shrface-mode +1)
     )
-  :custom
-  (nov-variable-pitch t)
+  :config
+  (setq nov-variable-pitch t)
+  (nov-shr-rendering-functions '((img . nov-render-img) (title . nov-render-title)))
+  (nov-shr-rendering-functions (append nov-shr-rendering-functions shr-external-rendering-functions))
   :mode
   ("\\.epub\\'" . nov-mode)
   :hook
@@ -1572,7 +1596,25 @@
 ;; Smartparens
 (use-package smartparens
   :hook
-  (prog-mode . smartparens-mode)
+  (prog-mode . smartparens-strict-mode)
+  :bind
+  (
+   ("C-M-a" . sp-beginning-of-sexp)
+   ("C-M-e" . sp-end-of-sexp)
+   ("C-M-f" . sp-forward-sexp)
+   ("C-M-b" . sp-backward-sexp)
+   ("C-M-n" . sp-next-sexp)
+   ("C-M-p" . sp-previous-sexp)
+   ("C-M-t" . sp-transpose-sexp)
+   ("C-M-k" . sp-kill-sexp)
+   )
+  )
+
+;; Evil-smartparens
+(use-package evil-smartparens
+  :disabled
+  :hook
+  (smartparens-enabled . evil-smartparens-mode)
   )
 
 ;; Prescient
@@ -2397,9 +2439,13 @@ targets."
 ;; Zoxide
 (use-package zoxide
   :defer t
-  :config
-  (add-hook 'find-file-hook 'zoxide-add)
-  (add-hook 'projectile-after-switch-project-hook 'zoxide-add)
+  :hook
+  (
+   (
+    find-file
+    projectile-after-switch-project
+    ) . zoxide-add
+   )
   )
 
 ;; Auto-yasnippet
@@ -2426,6 +2472,7 @@ targets."
    )
   )
 
+;; Selection-highlight-mode
 (use-package selection-highlight-mode
   :straight
   (
@@ -2433,12 +2480,169 @@ targets."
    :host github
    :repo "balloneij/selection-highlight-mode"
    )
-  :config
-  (selection-highlight-mode)
+  :hook
+  (prog-mode . smartscan-mode)
   )
 
 ;; Smartscan
 (use-package smartscan
   :config
   (smartscan-mode +1)
+  )
+
+;; Consult-dir
+(use-package consult-dir
+  :bind
+  (
+   ("C-x C-d" . consult-dir)
+   :map vertico-map
+   ("C-x C-d" . consult-dir)
+   ("C-x C-j" . consult-dir-jump-file)
+   )
+  :custom
+  (consult-dir-project-list-function nil)
+  )
+
+;; Repeat-help
+(use-package repeat-help
+  :hook
+  (repeat-mode . repeat-help-mode)
+  :custom
+  (repeat-help-auto t)
+  )
+
+;; Dired-hist
+(use-package dired-hist
+  :straight
+  (
+   :type git
+   :host github
+   :repo "karthink/dired-hist"
+   )
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "gt" 'dired-hist-go-forward
+    "gT" 'dired-hist-go-back
+    )
+  )
+
+;; Epithet
+(use-package epithet
+  :config
+  (add-hook 'Info-selection-hook #'epithet-rename-buffer)
+  (add-hook 'eww-after-render-hook #'epithet-rename-buffer)
+  (add-hook 'help-mode-hook #'epithet-rename-buffer)
+  (add-hook 'occur-hook #'epithet-rename-buffer) ; not occur-mode-hook
+  (add-hook 'shell-mode-hook #'epithet-rename-buffer)
+  (add-hook 'compilation-start-hook #'epithet-rename-buffer-ignoring-arguments)
+  (add-hook 'compilation-finish-functions #'epithet-rename-buffer-ignoring-arguments)
+  ;;Rename describe-bindings buffers
+  (defun rename-describe-bindings (&rest _)
+    (with-current-buffer (help-buffer)
+      (epithet-rename-buffer)
+      )
+    )
+  (advice-add 'describe-bindings :after #'rename-describe-bindings)
+  )
+
+;; Popper
+(use-package popper
+  :disabled t
+  :config
+  (setq popper-reference-buffers '(
+                                   "\\*Messages\\*"
+                                   "Output\\*$"
+                                   help-mode
+                                   compilation-mode
+                                   "^\\*vterm.*\\*$"
+                                   )
+        )
+  (popper-mode +1)
+  (popper-echo-mode +1)
+  )
+
+;; Pdf-tools
+(use-package pdf-tools
+  :mode
+  ("\\.pdf\\'")
+  :bind
+  (
+   :map pdf-view-mode-map
+   ("j" . pdf-view-next-line-or-next-page)
+   ("k" . pdf-view-previous-line-or-previous-page)
+   ("C-=" . pdf-view-enlarge)
+   ("C--" . pdf-view-shrink)
+   )
+  :config
+  (pdf-loader-install)
+  (add-to-list 'revert-without-query ".pdf")
+  )
+
+;; Shrface
+(use-package shrface
+  :disabled t
+  :custom
+  (shrface-href-versatile t)
+  :config
+  (shrface-basic)
+  (shrface-trial)
+  (shrface-default-keybindings)
+  )
+
+;; Mode-minder
+(use-package mode-minder
+  :straight
+  (
+   :type git
+   :host github
+   :repo "jdtsmith/mode-minder"
+   )
+  :commands
+  (mode-minder)
+  )
+
+;; Zoom
+(use-package zoom
+  :preface
+  (defun arbab/zoom-fix-imenu-size ()
+    (with-selected-window (get-buffer-window "*Ilist*")
+      (setq window-size-fixed t)
+      (window-resize (selected-window) (- 30 (window-total-width)) t t)
+      )
+    )
+  :hook
+  (after-init . zoom-mode)
+  :custom
+  (zoom-minibuffer-preserve-layout nil)
+  :hook
+  (imenu-list-update . arbab/zoom-fix-imenu-size)
+  )
+
+;; Workgroups2
+(use-package workgroups2
+  :init
+  (workgroups-mode +1)
+  :config
+  (add-hook 'delete-frame-functions (lambda () (wg-create-workgroup "Last Session")))
+  )
+
+;; Lipsy
+(use-package lispy
+  :disabled t
+  :hook
+  (emacs-lisp-mode . lispy-mode)
+  )
+
+;; Lispyville
+(use-package lispyville
+  :after
+  (lipsy)
+  :hook
+  (lispy-mode . lispyville-mode)
+  )
+
+;; Git-timemachine
+(use-package git-timemachine
+  :commands
+  (git-timemachine-toggle)
   )

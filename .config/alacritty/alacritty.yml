@@ -49,7 +49,7 @@ colors:
     white: "#aeb3bb"
 
 window:
-  opacity: 0.75
+  opacity: 0.50
 font:
   normal:
     family: JetBrains Mono Nerd Font

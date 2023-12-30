@@ -94,7 +94,7 @@
 
 ;; Load sensitive variables from file
 (setq env (concat user-emacs-directory "env.el"))
-(load env)
+(load env 'noerror 'nomessage)
 
 ;; Don't pop up UI dialogs when prompting
 (setq use-dialog-box nil)
@@ -152,6 +152,9 @@
 (electric-pair-mode +1)
 (electric-quote-mode +1)
 
+;; Undo Window Configurations
+(winner-mode +1)
+
 ;; Revert buffers when the underlying file has changed
 (global-auto-revert-mode +1)
 (setq global-auto-revert-non-file-buffers t)
@@ -207,6 +210,7 @@
                 Custom-mode-hook
                 deadgrep-mode-hook
                 devdocs-mode
+                pdf-view-mode-hook
                 )
               )
   (add-hook mode (lambda () (display-line-numbers-mode 0)
@@ -389,3 +393,6 @@ point reaches the beginning or end of the buffer, stop there."
 (global-set-key [remap evil-first-non-blank] 'arbab/smarter-move-beginning-of-line)
 ;; Remap ^ to `smarter-move-beginning-of-line'
 (global-set-key [remap move-beginning-of-line] 'arbab/smarter-move-beginning-of-line)
+
+;; Control buffer placement
+(setq even-window-sizes nil)
